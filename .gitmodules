@@ -1,0 +1,6 @@
+[submodule "Jank/vendor/spdlog"]
+	path = Jank/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "Jank/vendor/GLFW"]
+	path = Jank/vendor/GLFW
+	url = https://github.com/TheCherno/GLFW
