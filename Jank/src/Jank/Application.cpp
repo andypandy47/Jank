@@ -1,26 +1,40 @@
 #include "Jankpch.h"
 #include "Application.h"
 
-#include "Jank/Events/ApplicationEvent.h"
 #include "Jank/Log.h"
 
-namespace Jank {
-	Application::Application() {
+#include <GLFW/glfw3.h>
 
+namespace Jank {
+
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
+	Application::Application() {
+		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 	}
 
 	Application::~Application() {
 
 	}
 
+	void Application::OnEvent(Event& e) {
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+		JANK_CORE_TRACE("{0}", e);
+	}
+
 	void Application::Run() {
-		WindowResizeEvent e(1200, 720);
-		if (e.IsInCategory(EventCategoryApplication)) {
-			JANK_TRACE(e);
-		}
 
-		while (true) {
-
+		while (m_Running) {
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
 		}
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e) {
+		m_Running = false;
+		return true;
 	}
 }

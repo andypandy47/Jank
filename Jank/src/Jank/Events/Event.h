@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Jankpch.h"
 #include "Jank/Core.h"
 
 namespace Jank {

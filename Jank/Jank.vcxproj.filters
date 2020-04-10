@@ -35,6 +35,8 @@
       <Filter>Jank</Filter>
     </ClInclude>
     <ClInclude Include="src\Jankpch.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Jank\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Jank\Application.cpp">
@@ -44,5 +46,6 @@
       <Filter>Jank</Filter>
     </ClCompile>
     <ClCompile Include="src\Jankpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>
