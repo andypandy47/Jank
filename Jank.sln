@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{A9A598EA-F07D-4A1A-A455-FD168CBD4B58}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Jank", "Jank\Jank.vcxproj", "{25948A87-1AA1-4E67-9716-8B7758987CA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25948A87-1AA1-4E67-9716-8B7758987CA9}.Debug|x64.ActiveCfg = Debug|x64
+		{25948A87-1AA1-4E67-9716-8B7758987CA9}.Debug|x64.Build.0 = Debug|x64
+		{25948A87-1AA1-4E67-9716-8B7758987CA9}.Release|x64.ActiveCfg = Release|x64
+		{25948A87-1AA1-4E67-9716-8B7758987CA9}.Release|x64.Build.0 = Release|x64
+		{A9A598EA-F07D-4A1A-A455-FD168CBD4B58}.Debug|x64.ActiveCfg = Debug|x64
+		{A9A598EA-F07D-4A1A-A455-FD168CBD4B58}.Debug|x64.Build.0 = Debug|x64
+		{A9A598EA-F07D-4A1A-A455-FD168CBD4B58}.Release|x64.ActiveCfg = Release|x64
+		{A9A598EA-F07D-4A1A-A455-FD168CBD4B58}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41D083CC-E6D0-4229-9D7C-73E69C67E36C}
+	EndGlobalSection
+EndGlobal
