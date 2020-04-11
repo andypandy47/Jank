@@ -1,22 +1,26 @@
 
 #include <Jank.h>
 
-class ExampleLayer : public Jank::Layer {
+class ExampleLayer : public Jank::Layer 
+{
 public:
 	ExampleLayer()
 		: Layer("Example")
 	{}
 
-	void OnUpdate() override {
-		
+	void OnUpdate() override 
+	{
+
 	}
 
-	void OnEvent(Jank::Event& e) {
+	void OnEvent(Jank::Event& e) 
+	{
 		
 	}
 };
 
-class Sandbox : public Jank::Application {
+class Sandbox : public Jank::Application 
+{
 public:
 	Sandbox() 
 	{ 
@@ -27,6 +31,7 @@ public:
 
 };
 
-Jank::Application* Jank::CreateApplication() {
+Jank::Application* Jank::CreateApplication() 
+{
 	return new Sandbox();
 }

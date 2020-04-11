@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "Jank/Log.h"
+#include "Jank/Input.h"
 
 #include <glad/glad.h>
 

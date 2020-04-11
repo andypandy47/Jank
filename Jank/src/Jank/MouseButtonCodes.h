@@ -1,0 +1,15 @@
+#pragma once
+
+//from glfw3.h
+#define JANK_MOUSE_BUTTON_1         0
+#define JANK_MOUSE_BUTTON_2         1
+#define JANK_MOUSE_BUTTON_3         2
+#define JANK_MOUSE_BUTTON_4         3
+#define JANK_MOUSE_BUTTON_5         4
+#define JANK_MOUSE_BUTTON_6         5
+#define JANK_MOUSE_BUTTON_7         6
+#define JANK_MOUSE_BUTTON_8         7
+#define JANK_MOUSE_BUTTON_LAST      JANK_MOUSE_BUTTON_8
+#define JANK_MOUSE_BUTTON_LEFT      JANK_MOUSE_BUTTON_1
+#define JANK_MOUSE_BUTTON_RIGHT     JANK_MOUSE_BUTTON_2
+#define JANK_MOUSE_BUTTON_MIDDLE    JANK_MOUSE_BUTTON_3

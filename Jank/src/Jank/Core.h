@@ -10,9 +10,13 @@
 	#error Jank only supports Windows!
 #endif
 
+#ifdef JANK_DEBUG
+	#define JANK_ENABLE_ASSERTS
+#endif
+
 #ifdef JANK_ENABLE_ASSERTS
-	#define JANK_ASSERT(x, ...) { if(!(x)) {HZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define JANK_CORE_ASSERT(x, ...) { if(!(x)) {HZ_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define JANK_ASSERT(x, ...) { if(!(x)) {JANK_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define JANK_CORE_ASSERT(x, ...) { if(!(x)) {JANK_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 	#define JANK_ASSERT(x, ...)
 	#define JANK_CORE_ASSERT(x, ...)
