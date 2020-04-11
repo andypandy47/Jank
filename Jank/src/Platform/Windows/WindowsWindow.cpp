@@ -8,15 +8,18 @@
 
 #include <glad/glad.h>
 
-namespace Jank {
+namespace Jank 
+{
 
 	static bool s_GLFWInitialised = false;
 
-	static void GLFWErrorCallback(int error, const char* description) {
+	static void GLFWErrorCallback(int error, const char* description) 
+	{
 		JANK_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props) {
+	Window* Window::Create(const WindowProps& props) 
+	{
 		return new WindowsWindow(props);
 	}
 
@@ -30,14 +33,16 @@ namespace Jank {
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowProps& props) {
+	void WindowsWindow::Init(const WindowProps& props) 
+	{
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
 		JANK_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!s_GLFWInitialised) {
+		if (!s_GLFWInitialised) 
+		{
 
 			//TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
@@ -65,14 +70,16 @@ namespace Jank {
 			data.EventCallback(event);
 		});
 
-		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) 
+		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			
 			WindowCloseEvent event;
 			data.EventCallback(event);
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) 
+		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			switch (action) {
@@ -97,7 +104,16 @@ namespace Jank {
 			}
 		});
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			KeyTypedEvent event(keycode);
+			data.EventCallback(event);
+		});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) 
+		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			switch (action) {
@@ -116,14 +132,16 @@ namespace Jank {
 			}
 		});
 
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) 
+		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
 			data.EventCallback(event);
 		});
 
-		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) 
+		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			MouseMovedEvent event(xPos, yPos);
@@ -131,12 +149,14 @@ namespace Jank {
 		});
 	}
 
-	void WindowsWindow::OnUpdate() {
+	void WindowsWindow::OnUpdate() 
+	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
-	void WindowsWindow::SetVSync(bool enabled) {
+	void WindowsWindow::SetVSync(bool enabled) 
+	{
 		if (enabled)
 			glfwSwapInterval(1);
 		else
@@ -145,11 +165,13 @@ namespace Jank {
 		m_Data.vsync = enabled;
 	}
 
-	bool WindowsWindow::IsVsync() const {
+	bool WindowsWindow::IsVsync() const 
+	{
 		return m_Data.vsync;
 	}
 
-	void WindowsWindow::Shutdown() {
+	void WindowsWindow::Shutdown() 
+	{
 		glfwTerminate();
 	}
 }

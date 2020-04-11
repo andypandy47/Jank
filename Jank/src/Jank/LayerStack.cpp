@@ -1,13 +1,17 @@
 #include "Jankpch.h"
 #include "LayerStack.h"
 
-namespace Jank {
-	LayerStack::LayerStack() {
+namespace Jank 
+{
+	LayerStack::LayerStack() 
+	{
 		m_LayerInsert = m_Layers.begin();
 	}
 
-	LayerStack::~LayerStack() {
-		for (Layer* layer : m_Layers) {
+	LayerStack::~LayerStack() 
+	{
+		for (Layer* layer : m_Layers) 
+		{
 			delete layer;
 		}
 	}
@@ -25,7 +29,8 @@ namespace Jank {
 	void LayerStack::PopLayer(Layer* layer)
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
-		if (it != m_Layers.end()) {
+		if (it != m_Layers.end()) 
+		{
 			m_Layers.erase(it);
 			m_LayerInsert--;
 		}
@@ -34,7 +39,8 @@ namespace Jank {
 	void LayerStack::PopOverlay(Layer* overlay)
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
-		if (it != m_Layers.end()) {
+		if (it != m_Layers.end()) 
+		{
 			m_Layers.erase(it);
 		}
 	}

@@ -2,7 +2,8 @@
 
 #include "Event.h"
 
-namespace Jank {
+namespace Jank 
+{
 
 	class JANK_API KeyEvent : public Event
 	{
@@ -35,6 +36,22 @@ namespace Jank {
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
 		int m_RepeatCount;
+	};
+
+	class JANK_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
 	};
 
 	class JANK_API KeyReleasedEvent : public KeyEvent

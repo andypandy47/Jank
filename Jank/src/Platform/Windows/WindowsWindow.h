@@ -4,9 +4,11 @@
 
 #include <GLFW/glfw3.h>
 
-namespace Jank {
+namespace Jank 
+{
 
-	class WindowsWindow : public Window {
+	class WindowsWindow : public Window 
+	{
 	public:
 		WindowsWindow(const WindowProps& props);
 		virtual ~WindowsWindow();
@@ -28,7 +30,8 @@ namespace Jank {
 	private:
 		GLFWwindow* m_Window;
 
-		struct WindowData {
+		struct WindowData 
+		{
 			std::string Title;
 			unsigned int Width, Height;
 			bool vsync;

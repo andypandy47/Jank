@@ -3,7 +3,8 @@
 #include "Jankpch.h"
 #include "Jank/Core.h"
 
-namespace Jank {
+namespace Jank 
+{
 
 	// Events in Jank are currently blocking, meaning when an event occurs it
 	// immediately gets dispatched and must be dealt with right then an there.
@@ -15,7 +16,7 @@ namespace Jank {
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 

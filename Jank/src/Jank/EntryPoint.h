@@ -4,7 +4,8 @@
 
 extern Jank::Application* Jank::CreateApplication();
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) 
+{
 	Jank::Log::Init();
 	JANK_CORE_WARN("Initialised Log!");
 	int a = 5;

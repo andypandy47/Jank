@@ -18,7 +18,11 @@ public:
 
 class Sandbox : public Jank::Application {
 public:
-	Sandbox() { PushLayer(new ExampleLayer()); }
+	Sandbox() 
+	{ 
+		PushLayer(new ExampleLayer()); 
+		PushOverlay(new Jank::ImGuiLayer());
+	}
 	~Sandbox() {}
 
 };

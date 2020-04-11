@@ -5,9 +5,11 @@
 
 #include <vector>
 
-namespace Jank {
+namespace Jank 
+{
 
-	class JANK_API LayerStack {
+	class JANK_API LayerStack 
+	{
 	public:
 		LayerStack();
 		~LayerStack();
