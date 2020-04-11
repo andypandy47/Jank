@@ -1,4 +1,3 @@
-
 #include <Jank.h>
 
 class ExampleLayer : public Jank::Layer 
@@ -6,7 +5,8 @@ class ExampleLayer : public Jank::Layer
 public:
 	ExampleLayer()
 		: Layer("Example")
-	{}
+	{
+	}
 
 	void OnUpdate() override 
 	{
