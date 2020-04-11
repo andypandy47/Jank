@@ -13,8 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Jank/vendor/GLFW/include"
+IncludeDir["Glad"] = "Jank/vendor/Glad/include"
 
 include "Jank/vendor/GLFW"
+include "Jank/vendor/Glad"
 
 project "Jank"
 	location "Jank"
@@ -37,12 +39,14 @@ project "Jank"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -54,7 +58,8 @@ project "Jank"
 		defines
 		{
 			"JANK_PLATFORM_WINDOWS",
-			"JANK_BUILD_DLL"
+			"JANK_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
