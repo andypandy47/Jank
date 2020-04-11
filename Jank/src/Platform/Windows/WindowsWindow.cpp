@@ -1,7 +1,7 @@
 #include "Jankpch.h"
 #include "WindowsWindow.h"
 
-#include <Jank\Log.h>
+#include "Jank/Log.h"
 #include "Jank/Events/ApplicationEvent.h"
 #include "Jank/Events/KeyEvent.h"
 #include "Jank/Events/MouseEvent.h"

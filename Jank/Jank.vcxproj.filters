@@ -7,6 +7,12 @@
     <Filter Include="Jank\Events">
       <UniqueIdentifier>{8D5EA998-F913-228E-8208-1C65EEBC1892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Jank.h" />
@@ -31,21 +37,39 @@
     <ClInclude Include="src\Jank\Events\MouseEvent.h">
       <Filter>Jank\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Jank\Layer.h">
+      <Filter>Jank</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Jank\LayerStack.h">
+      <Filter>Jank</Filter>
+    </ClInclude>
     <ClInclude Include="src\Jank\Log.h">
       <Filter>Jank</Filter>
     </ClInclude>
+    <ClInclude Include="src\Jank\Window.h">
+      <Filter>Jank</Filter>
+    </ClInclude>
     <ClInclude Include="src\Jankpch.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\Jank\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Jank\Application.cpp">
+      <Filter>Jank</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Jank\Layer.cpp">
+      <Filter>Jank</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Jank\LayerStack.cpp">
       <Filter>Jank</Filter>
     </ClCompile>
     <ClCompile Include="src\Jank\Log.cpp">
       <Filter>Jank</Filter>
     </ClCompile>
     <ClCompile Include="src\Jankpch.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
