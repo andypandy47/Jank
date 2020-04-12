@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef JANK_PLATFORM_WINDOWS
+#if JANK_DYNAMIC_LINK
 	#ifdef JANK_BUILD_DLL
 		#define JANK_API __declspec(dllexport)
 	#else
 		#define JANK_API __declspec(dllimport)
 	#endif
+#else
+	#define JANK_API
+#endif
 #else
 	#error Jank only supports Windows!
 #endif
