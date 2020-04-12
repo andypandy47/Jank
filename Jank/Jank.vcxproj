@@ -166,7 +166,6 @@
     <ClInclude Include="src\Jank\MouseButtonCodes.h" />
     <ClInclude Include="src\Jank\Window.h" />
     <ClInclude Include="src\Jankpch.h" />
-    <ClInclude Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -552,6 +551,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Jank\Application.cpp" />
+    <ClCompile Include="src\Jank\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Jank\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Jank\Layer.cpp" />
     <ClCompile Include="src\Jank\LayerStack.cpp" />
@@ -559,7 +559,6 @@
     <ClCompile Include="src\Jankpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>

@@ -16,9 +16,6 @@
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Platform\OpenGl">
-      <UniqueIdentifier>{55A49437-C105-7245-4A73-B8F7B6D3A804}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
@@ -95,9 +92,6 @@
     </ClInclude>
     <ClInclude Include="src\Jankpch.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.h">
-      <Filter>src\Platform\OpenGl</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
@@ -1250,6 +1244,9 @@
     <ClCompile Include="src\Jank\Application.cpp">
       <Filter>src\Jank</Filter>
     </ClCompile>
+    <ClCompile Include="src\Jank\ImGui\ImGuiBuild.cpp">
+      <Filter>src\Jank\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\Jank\ImGui\ImGuiLayer.cpp">
       <Filter>src\Jank\ImGui</Filter>
     </ClCompile>
@@ -1264,9 +1261,6 @@
     </ClCompile>
     <ClCompile Include="src\Jankpch.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGl\ImGuiOpenGLRenderer.cpp">
-      <Filter>src\Platform\OpenGl</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>

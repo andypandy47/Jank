@@ -5,6 +5,7 @@
 #include "Jank/Events/ApplicationEvent.h"
 #include "Jank/Window.h"
 #include "Jank/Layerstack.h"
+#include "Jank/ImGui/ImGuiLayer.h"
 
 namespace Jank
 {
@@ -28,6 +29,7 @@ namespace Jank
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_Layerstack;
 	private:

@@ -1,4 +1,5 @@
 #include <Jank.h>
+#include "ImGui/imgui.h"
 
 class ExampleLayer : public Jank::Layer 
 {
@@ -13,6 +14,13 @@ public:
 
 	}
 
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello imgui!");
+		ImGui::End();
+	}
+
 	void OnEvent(Jank::Event& e) 
 	{
 		
@@ -25,7 +33,6 @@ public:
 	Sandbox() 
 	{ 
 		PushLayer(new ExampleLayer()); 
-		PushOverlay(new Jank::ImGuiLayer());
 	}
 	~Sandbox() {}
 
