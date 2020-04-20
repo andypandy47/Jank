@@ -1,10 +1,8 @@
 #include "Jankpch.h"
 #include "Application.h"
 
-#include "Jank/Log.h"
 #include "Jank/Input.h"
-
-#include <glad/glad.h>
+#include "Jank/Renderer/Renderer.h"
 
 namespace Jank 
 {
@@ -13,7 +11,7 @@ namespace Jank
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application() 
+	Application::Application()
 	{
 		JANK_CORE_ASSERT(!s_Instance, "Application already exists!")
 		s_Instance = this;
@@ -26,7 +24,6 @@ namespace Jank
 
 	Application::~Application() 
 	{
-
 	}
 
 	void Application::OnEvent(Event& e) 
@@ -43,8 +40,8 @@ namespace Jank
 
 	void Application::Run() 
 	{
-		while (m_Running) {
-			glClear(GL_COLOR_BUFFER_BIT);
+		while (m_Running) 
+		{
 			for (Layer* layer : m_Layerstack)
 				layer->OnUpdate();
 

@@ -1,12 +1,11 @@
 #include "Jankpch.h"
 #include "WindowsWindow.h"
 
-#include "Jank/Log.h"
 #include "Jank/Events/ApplicationEvent.h"
 #include "Jank/Events/KeyEvent.h"
 #include "Jank/Events/MouseEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGl/OpenGLContext.h"
 
 namespace Jank 
 {
@@ -53,9 +52,10 @@ namespace Jank
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		JANK_CORE_ASSERT(status, "Failed to initialise Glad!");
+
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -152,7 +152,7 @@ namespace Jank
 	void WindowsWindow::OnUpdate() 
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled) 

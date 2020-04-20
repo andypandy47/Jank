@@ -1239,6 +1239,18 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Jank\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLContext.h" />
+    <ClInclude Include="src\Jank\Renderer\Shader.h" />
+    <ClInclude Include="src\Jank\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLBuffer.h" />
+    <ClInclude Include="src\Jank\Renderer\Renderer.h" />
+    <ClInclude Include="src\Jank\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Jank\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Jank\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Platform\OpenGl\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Jank\Renderer\OrthographicCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Jank\Application.cpp">
@@ -1268,5 +1280,16 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGl\OpenGLContext.cpp" />
+    <ClCompile Include="src\Jank\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Jank\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Jank\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Jank\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Jank\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Jank\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Platform\OpenGl\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Jank\Renderer\OrthographicCamera.cpp" />
   </ItemGroup>
 </Project>

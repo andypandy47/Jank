@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Jank/Log.h"
+
 #ifdef JANK_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif

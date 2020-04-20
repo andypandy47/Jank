@@ -9,5 +9,17 @@
 #include "Jank/MouseButtonCodes.h"
 #include "Jank/Input.h"
 
-//--Entry Point----------------
+//--Renderer---------------------
+#include "Jank/Renderer/Renderer.h"
+#include "Jank/Renderer/RenderCommand.h"
+
+#include "Jank/Renderer/VertexArray.h"
+#include "Jank/Renderer/Shader.h"
+#include "Jank/Renderer/Buffer.h"
+
+#include "Jank/Renderer/OrthographicCamera.h"
+//-------------------------------
+
+//--Entry Point------------------
 #include "Jank//EntryPoint.h"
+//-------------------------------
