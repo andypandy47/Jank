@@ -4,6 +4,8 @@
 #include "Jank/Input.h"
 #include "Jank/Renderer/Renderer.h"
 
+#include <GLFW/glfw3.h>
+
 namespace Jank 
 {
 
@@ -17,6 +19,8 @@ namespace Jank
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+
+		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -42,8 +46,12 @@ namespace Jank
 	{
 		while (m_Running) 
 		{
+			float time = (float)glfwGetTime(); //Platform::GetTime();
+			Timestep timeStep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 			for (Layer* layer : m_Layerstack)
-				layer->OnUpdate();
+				layer->OnUpdate(timeStep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_Layerstack)

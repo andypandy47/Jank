@@ -1,11 +1,17 @@
 #include <Jank.h>
+
+#include <Platform\OpenGl\OpenGLShader.h>
+
 #include "ImGui/imgui.h"
+
+#include <glm\glm\ext\matrix_transform.hpp>
+#include <glm\glm\gtc\type_ptr.hpp>
 
 class ExampleLayer : public Jank::Layer 
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6, 1.6, -0.9, 0.9f), m_CamPosition({0.0f, 0.0f, 0.0f})
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CamPosition(0.0f)
 	{
 		m_VertexArray.reset(Jank::VertexArray::Create());
 
@@ -15,7 +21,7 @@ public:
 			 0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 1.0f, 1.0f
 		};
 
-		std::shared_ptr<Jank::VertexBuffer> vb;
+		Jank::Ref<Jank::VertexBuffer> vb;
 		vb.reset(Jank::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Jank::BufferLayout layout = {
 				{Jank::ShaderDataType::Float3, "a_Position"},
@@ -26,118 +32,62 @@ public:
 		m_VertexArray->AddVertexBuffer(vb);
 
 		uint32_t indices[3] = { 0 ,1 ,2 };
-		std::shared_ptr<Jank::IndexBuffer> ib;
+		Jank::Ref<Jank::IndexBuffer> ib;
 		ib.reset(Jank::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(ib);
 
 		m_SquareVA.reset(Jank::VertexArray::Create());
 
-		float squareVertices[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<Jank::VertexBuffer> squareVB;
+		Jank::Ref<Jank::VertexBuffer> squareVB;
 		squareVB.reset(Jank::VertexBuffer::Create(squareVertices, sizeof(vertices)));
 		squareVB->SetLayout({
-				{Jank::ShaderDataType::Float3, "a_Position"}
+				{Jank::ShaderDataType::Float3, "a_Position"},
+				{Jank::ShaderDataType::Float2, "a_TexCoord"}
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0 ,1 ,2, 2, 3, 0 };
-		std::shared_ptr<Jank::IndexBuffer> squareIB;
+		Jank::Ref<Jank::IndexBuffer> squareIB;
 		squareIB.reset(Jank::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		std::string vertexSrc = R"(
-			#version 330 core
+		m_flatColourShader = Jank::Shader::Create("assets/shaders/FlatColour.glsl");
 
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Colour;
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
-			uniform mat4 u_ViewProjection;
-			
-			out vec3 v_Position;
-			out vec4 v_Colour;
-			
-			void main()
-			{
-				v_Position = a_Position;
-				v_Colour = a_Colour;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-		)";
+		m_Texture = Jank::Texture2D::Create("assets/textures/Checkerboard.png");
+		
+		m_LogoTexture = Jank::Texture2D::Create("assets/textures/test.png");
 
-		std::string fragmentSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 colour;
-
-			in vec3 v_Position;
-			in vec4 v_Colour;
-			
-			void main()
-			{
-				colour = v_Colour;
-			}
-		)";
-
-		m_Shader.reset(new Jank::Shader(vertexSrc, fragmentSrc));
-
-		std::string blueVertShader = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			
-			uniform mat4 u_ViewProjection;
-
-			out vec3 v_Position;
-			out vec4 v_Colour;
-			
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-		)";
-
-		std::string blueFragShader = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 colour;
-
-			in vec3 v_Position;
-			
-			void main()
-			{
-				colour = vec4(0.3, 0.5, 0.3, 1.0);
-			}
-		)";
-
-		m_BlueShader.reset(new Jank::Shader(blueVertShader, blueFragShader));
+		std::dynamic_pointer_cast<Jank::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Jank::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
-	void OnUpdate() override 
+	void OnUpdate(Jank::Timestep ts) override 
 	{
-		if (Jank::Input::IsKeyPressed(JANK_KEY_LEFT))
-			m_CamPosition.x -= m_CameraMoveSpeed;
+		float deltaTime = ts;
 
-		if (Jank::Input::IsKeyPressed(JANK_KEY_RIGHT))
-			m_CamPosition.x += m_CameraMoveSpeed;
+		if (Jank::Input::IsKeyPressed(JANK_KEY_LEFT))
+			m_CamPosition.x -= m_CameraMoveSpeed * deltaTime;
+		else if (Jank::Input::IsKeyPressed(JANK_KEY_RIGHT))
+			m_CamPosition.x += m_CameraMoveSpeed * deltaTime;
 
 		if (Jank::Input::IsKeyPressed(JANK_KEY_UP))
-			m_CamPosition.y += m_CameraMoveSpeed;
-
-		if (Jank::Input::IsKeyPressed(JANK_KEY_DOWN))
-			m_CamPosition.y -= m_CameraMoveSpeed;
+			m_CamPosition.y += m_CameraMoveSpeed * deltaTime;
+		else if (Jank::Input::IsKeyPressed(JANK_KEY_DOWN))
+			m_CamPosition.y -= m_CameraMoveSpeed * deltaTime;
 
 		if (Jank::Input::IsKeyPressed(JANK_KEY_A))
-			m_CamRotation -= m_CameraRotationSpeed;
-
-		if (Jank::Input::IsKeyPressed(JANK_KEY_D))
-			m_CamRotation += m_CameraRotationSpeed;
+			m_CamRotation -= m_CameraRotationSpeed * deltaTime;
+		else if (Jank::Input::IsKeyPressed(JANK_KEY_D))
+			m_CamRotation += m_CameraRotationSpeed * deltaTime;
 
 
 		Jank::RenderCommand::SetClearColour({ 0.1f, 0.1f, 0.1f, 1 });
@@ -148,14 +98,43 @@ public:
 
 		Jank::Renderer::BeginScene(m_Camera);
 
-		Jank::Renderer::Submit(m_BlueShader, m_SquareVA);
-		Jank::Renderer::Submit(m_Shader, m_VertexArray);
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+		//std::dynamic_pointer_cast<Jank::OpenGLShader>(m_flatColourShader)->Bind();
+		m_flatColourShader->Bind();
+		std::dynamic_pointer_cast<Jank::OpenGLShader>(m_flatColourShader)->UploadUniformFloat3("u_Colour", m_SquareColour);
+
+		for (int y = 0; y < 20; y++)
+		{
+			for (int x = 0; x < 20; x++)
+			{
+				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+
+				Jank::Renderer::Submit(m_flatColourShader, m_SquareVA, transform);
+			}
+		}
+
+		auto textureShader = m_ShaderLibrary.Get("Texture");
+
+		textureShader->Bind();
+		std::dynamic_pointer_cast<Jank::OpenGLShader>(textureShader)->UploadUniformFloat4("u_Colour", m_TextureColour);
+
+		m_Texture->Bind();
+		Jank::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		m_LogoTexture->Bind();
+		Jank::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		Jank::Renderer::EndScene();
 	}
 
 	virtual void OnImGuiRender() override
 	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Colour", glm::value_ptr(m_SquareColour));
+		ImGui::ColorEdit4("Texture Colour", glm::value_ptr(m_TextureColour));
+		ImGui::End();
 	}
 
 	void OnEvent(Jank::Event& e) 
@@ -164,19 +143,25 @@ public:
 
 
 private:
-	std::shared_ptr<Jank::Shader> m_Shader;
-	std::shared_ptr<Jank::VertexArray> m_VertexArray;
+	Jank::ShaderLibrary m_ShaderLibrary;
 
-	std::shared_ptr<Jank::VertexArray> m_SquareVA;
-	std::shared_ptr<Jank::Shader> m_BlueShader;
+	Jank::Ref<Jank::VertexArray> m_VertexArray;
+
+	Jank::Ref<Jank::VertexArray> m_SquareVA;
+	Jank::Ref<Jank::Shader> m_flatColourShader;
+
+	Jank::Ref<Jank::Texture2D> m_Texture, m_LogoTexture;
 
 	Jank::OrthographicCamera m_Camera;
 
 	glm::vec3 m_CamPosition;
-	float m_CameraMoveSpeed = 0.05f;
+	float m_CameraMoveSpeed = 5.0f;
 
 	float m_CamRotation = 0.0f;
-	float m_CameraRotationSpeed = 1.0f;
+	float m_CameraRotationSpeed = 180.0f;
+
+	glm::vec3 m_SquareColour = { 0.2f, 0.8f, 0.3f };
+	glm::vec4 m_TextureColour = { 1.0, 1.0, 1.0, 1.0 };
 };
 
 class Sandbox : public Jank::Application 

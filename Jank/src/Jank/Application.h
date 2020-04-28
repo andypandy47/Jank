@@ -7,6 +7,8 @@
 #include "Jank/Layerstack.h"
 #include "Jank/ImGui/ImGuiLayer.h"
 
+#include "Jank/Core/Timestep.h"
+
 namespace Jank
 {
 
@@ -27,14 +29,16 @@ namespace Jank
 		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-
-		std::unique_ptr<Window> m_Window;
+	private:
+		Scope<Window> m_Window;
 
 		ImGuiLayer* m_ImGuiLayer;
 
 		bool m_Running = true;
 
 		LayerStack m_Layerstack;
+
+		float m_LastFrameTime = 0.0f;
 	private:
 		static Application* s_Instance;
 	};

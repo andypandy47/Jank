@@ -10,7 +10,7 @@ namespace Jank
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:		JANK_CORE_ASSERT(false, "RenderAPI::None is currently not supported"); return nullptr;
+		case RendererAPI::API::None:	JANK_CORE_ASSERT(false, "RenderAPI::None is currently not supported"); return nullptr;
 		case RendererAPI::API::OpenGL:	return new OpenGLVertexArray();
 		}
 

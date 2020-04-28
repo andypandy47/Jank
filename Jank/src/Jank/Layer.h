@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Jank/Core.h"
+#include "Jank/Core/Timestep.h"
 #include "Jank/Events/Event.h"
 
 namespace Jank {
@@ -12,7 +13,7 @@ namespace Jank {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 
